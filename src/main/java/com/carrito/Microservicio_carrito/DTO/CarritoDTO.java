@@ -1,5 +1,6 @@
 package com.carrito.Microservicio_carrito.DTO;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

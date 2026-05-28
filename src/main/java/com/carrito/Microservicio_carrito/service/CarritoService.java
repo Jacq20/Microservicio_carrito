@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.carrito.Microservicio_carrito.DTO.CarritoDTO;
 import com.carrito.Microservicio_carrito.model.Carrito;
+import com.carrito.Microservicio_carrito.model.UsuarioDTO;
 import com.carrito.Microservicio_carrito.repository.CarritoRepository;
 
 @Service
@@ -17,8 +19,20 @@ public class CarritoService {
     @Autowired
     private CarritoRepository carritoRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     public Carrito crearCarrito(CarritoDTO dto) {
         try {
+            // Le preguntamos a ms_usuarios si el usuario existe
+            String url = "http://localhost:8089/api/usuarios/" + dto.getIdUsuario();
+            UsuarioDTO usuario = restTemplate.getForObject(url, UsuarioDTO.class);
+
+            // Si el usuario NO existe, no creamos el carrito
+            if (usuario == null) {
+                throw new RuntimeException("El usuario no existe");
+            }
+
             Carrito carrito = new Carrito();
             carrito.setIdUsuario(dto.getIdUsuario());
             carrito.setItems(new ArrayList<>());

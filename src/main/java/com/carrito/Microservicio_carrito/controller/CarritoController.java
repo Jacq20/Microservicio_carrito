@@ -17,6 +17,8 @@ import com.carrito.Microservicio_carrito.DTO.CarritoDTO;
 import com.carrito.Microservicio_carrito.model.Carrito;
 import com.carrito.Microservicio_carrito.service.CarritoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/carrito")
 public class CarritoController {
